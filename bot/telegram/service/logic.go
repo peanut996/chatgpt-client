@@ -16,9 +16,9 @@ func IsGPTMessage(message tgbotapi.Message) bool {
 	return message.IsCommand() && (message.Command() == cmd.GPT4 || message.Command() == cmd.GPT)
 }
 
-func IsGPT4Message(message tgbotapi.Message) bool {
-	return message.IsCommand() && message.Command() == cmd.GPT4
-}
+//func IsGPT4Message(message tgbotapi.Message) bool {
+//	return message.IsCommand() && message.Command() == cmd.GPT4
+//}
 
 func (b *Bot) IsBotAdmin(from int64) bool {
 	if b.config.AdminID == 0 {

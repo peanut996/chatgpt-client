@@ -242,9 +242,7 @@ func (b *Bot) handleMessage(message tgbotapi.Message) {
 		return
 	}
 
-	if !IsGPT4Message(message) {
-		b.sendQueueToast(message.Chat.ID, message.MessageID)
-	}
+	b.sendQueueToast(message.Chat.ID, message.MessageID)
 
 	b.publishChatTask(message)
 
@@ -257,12 +255,8 @@ func (b *Bot) publishChatTask(message tgbotapi.Message) {
 	if err == nil {
 		chatTask.User = user
 	}
-	if IsGPT4Message(message) && !b.config.Downgrade {
-		b.gpt4TaskChannel <- *chatTask
-	} else {
-		chatTask.IsGPT4Message = false
-		b.chatTaskChannel <- *chatTask
-	}
+	chatTask.IsGPT4Message = false
+	b.chatTaskChannel <- *chatTask
 	b.sendTyping(chatTask.Chat)
 }
 
@@ -308,9 +302,9 @@ func (b *Bot) registerGPT4Limiter(limiters ...limiter.Limiter) {
 
 func (b *Bot) checkLimiters(m tgbotapi.Message) bool {
 	limiters := b.limiters
-	if IsGPTMessage(m) && m.Command() == cmd.GPT4 {
-		limiters = b.gpt4Limiters
-	}
+	//if IsGPTMessage(m) && m.Command() == cmd.GPT4 {
+	//	limiters = b.gpt4Limiters
+	//}
 	for _, l := range limiters {
 		ok, err := l.Allow(b, m)
 		if !ok {
@@ -326,9 +320,9 @@ func (b *Bot) checkLimiters(m tgbotapi.Message) bool {
 
 func (b *Bot) runLimitersCallBack(m tgbotapi.Message, success bool) {
 	limiters := b.limiters
-	if IsGPTMessage(m) && m.Command() == cmd.GPT4 {
-		limiters = b.gpt4Limiters
-	}
+	//if IsGPTMessage(m) && m.Command() == cmd.GPT4 {
+	//	limiters = b.gpt4Limiters
+	//}
 	for _, l := range limiters {
 		l.CallBack(b, m, success)
 	}

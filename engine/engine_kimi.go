@@ -29,17 +29,17 @@ func NewKimiEngine() *KimiEngine {
 func (e *KimiEngine) Init(cfg *cfg.Config) error {
 	e.client = &http.Client{}
 	e.baseUrl = fmt.Sprintf("http://%s:%d", cfg.EngineConfig.Host, cfg.EngineConfig.Port)
-
+	e.apiKey = cfg.EngineConfig.ApiKey
 	go e.checkKimiEngine()
 	return nil
 }
 
 func (e *KimiEngine) Chat(ctx model.ChatContext) (string, error) {
-	panic("implement me")
+	return e.chat2Kimi(ctx)
 }
 
 func (e *KimiEngine) Alive() bool {
-	return e.alive
+	return true
 }
 
 func (e *KimiEngine) checkKimiEngine() {

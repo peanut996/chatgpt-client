@@ -1,18 +1,11 @@
 version: '3'
 
 services:
-  client:
-    build: 
-      context: .
-      dockerfile: client/GoDockerfile
-    container_name: BotClient
+  kimi-free-api:
+    container_name: kimi-free-api
+    image: vinlic/kimi-free-api:latest
     restart: always
-    depends_on:
-      - engine
-
-  engine:
-    build: 
-      context: .
-      dockerfile: engine/PythonDockerfile
-    container_name: BotEngine
-    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=Asia/Shanghai

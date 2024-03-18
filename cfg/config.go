@@ -25,6 +25,7 @@ type EngineConfig struct {
 	Account        string `yaml:"account"`
 	Password       string `yaml:"password"`
 	ConversationId string `yaml:"conversationId"`
+	ApiKey         string `yaml:"apiKey"`
 }
 
 type BotConfig struct {

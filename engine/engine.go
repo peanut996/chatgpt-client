@@ -8,6 +8,7 @@ import (
 var (
 	CHATGPT = "chatgpt"
 	BING    = "bing"
+	KIMI    = "kimi"
 )
 
 type Engine interface {
@@ -22,7 +23,9 @@ func GetEngine(engineType string) Engine {
 		return NewBingEngine()
 	case CHATGPT:
 		return NewChatGPTEngine()
+	case KIMI:
+		return NewKimiEngine()
 	default:
-		return NewChatGPTEngine()
+		return NewKimiEngine()
 	}
 }
